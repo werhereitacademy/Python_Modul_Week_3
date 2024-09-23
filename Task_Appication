@@ -1,0 +1,51 @@
+#add, complete, delete, and list their tasks.
+
+
+
+
+def addTask():
+    pass
+
+def completeTask():
+    pass
+
+def delTask():
+    pass
+
+def listTask():
+    pass
+
+def quitTaskMenu():
+    quit()
+    #sys.exit()           #for this code You must call the sys module.
+
+print("-"*170)
+
+print(
+    """
+
+1. Add to task
+2. Comlete to task
+3. Delelete to task
+4. List to task
+5. Quit
+      
+      """)
+
+
+choice = int(input(" Enter your choice : ")).spli
+if choice == 1 :
+    addTask()
+elif choice == 2 :
+    completeTask()
+elif choice == 3:
+    delTask()
+elif choice ==4 :
+    listTask()
+elif choice == 5:
+    quitTaskMenu()
+
+else :
+    
+    print(f" Please select the correct entry option:\n{"-"*50}\nLet it be between 1 and 5\n{"-"*50}\n")
+    
