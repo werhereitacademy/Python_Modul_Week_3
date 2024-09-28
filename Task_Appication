@@ -1,73 +1,126 @@
-#add, complete, delete, and list their tasks.
+# Görev durumları için sabitler
+TAMAMLANDI = "Tamamlandı"
+BEKLEMEDE = "Beklemede"
+SILINDI = "Silindi"
 
+# Görev listesi ve boş slotlar
+tasks = []
+empty_slots = []
 
+# Görev ekleme fonksiyonu
+def add_task(task_name):
+    task_id = len(tasks) + 1 if not empty_slots else empty_slots.pop(0)
+    tasks.append({"id": task_id, "task": task_name, "status": BEKLEMEDE})
+    print(f"{task_name} adlı görev eklendi. Görev ID: {task_id}")
 
+# Görev tamamlama fonksiyonu
+def complete_task():
+    if not tasks:
+        print("Hiç görev yok.")
+        return
+    
+    print("\nTamamlanabilecek görevler:")
+    for task in tasks:
+        if task["status"] == BEKLEMEDE:
+            print(f"{task['id']}. {task['task']}")
+    
+    try:
+        task_id = int(input("Tamamlamak istediğiniz görevin numarasını girin: "))
+        for task in tasks:
+            if task["id"] == task_id and task["status"] == BEKLEMEDE:
+                task["status"] = TAMAMLANDI
+                print(f"{task_id} numaralı görev tamamlandı.")
+                return
+        print("Geçersiz görev numarası.")
+    except ValueError:
+        print("Geçersiz giriş. Lütfen bir numara girin.")
 
-def addTask():
-    pass
+# Görev silme fonksiyonu
+def delete_task():
+    if not tasks:
+        print("Hiç görev yok.")
+        return
+    
+    print("\nSilinebilecek görevler:")
+    for task in tasks:
+        if task["status"] != SILINDI:
+            print(f"{task['id']}. {task['task']} - Durum: {task['status']}")
+    
+    try:
+        task_id = int(input("Silmek istediğiniz görevin numarasını girin: "))
+        for task in tasks:
+            if task["id"] == task_id and task["status"] != SILINDI:
+                task["status"] = SILINDI
+                empty_slots.append(task_id)  # Silinen görevin id'sini boş slotlara ekle
+                print(f"{task_id} numaralı görev silindi.")
+                return
+        print("Geçersiz görev numarası.")
+    except ValueError:
+        print("Geçersiz giriş. Lütfen bir numara girin.")
 
-def completeTask():
-    pass
+# Tamamlanmış görevleri listeleme fonksiyonu
+def list_completed_tasks():
+    print("Tamamlanmış görevler:")
+    completed_tasks = [task for task in tasks if task["status"] == TAMAMLANDI]
+    if not completed_tasks:
+        print("Henüz tamamlanmış görev yok.")
+    else:
+        for i, task in enumerate(completed_tasks):
+            print(f"{i + 1}. {task['task']}")
 
-def delTask():
-    pass
+# Tüm görevleri listeleme fonksiyonu
+def list_all_tasks():
+    print("Tüm görevler:")
+    if not tasks:
+        print("Hiç görev yok.")
+        return
+    for task in tasks:
+        print(f"{task['id']}. {task['task']} - Durum: {task['status']}")
 
+# Görev arama fonksiyonu
+def search_task():
+    search_term = input("Aramak istediğiniz görev adını girin: ")
+    found_tasks = [task for task in tasks if search_term.lower() in task["task"].lower()]
+    
+    if found_tasks:
+        print("Bulunan görevler:")
+        for task in found_tasks:
+            print(f"{task['id']}. {task['task']} - Durum: {task['status']}")
+    else:
+        print("Hiçbir görev bulunamadı.")
 
-def listTask():
-    pass
-
-
-def quitTaskMenu():
-    quit()
-    #sys.exit()           #for this code You must call the sys module.
-
-
-def taskMenu():
-
-    while True :
+# Ana Menü
+def main_menu():
+    while True:
+        print("\n1. Yeni görev ekle")
+        print("2. Görev tamamla")
+        print("3. Görev sil")
+        print("4. Tamamlanmış görevleri listele")
+        print("5. Tüm görevleri listele")
+        print("6. Görev ara")
+        print("7. Çıkış")
         
+        choice = input("Bir seçenek girin: ")
         
+        if choice == '1':
+            task_name = input("Görev adını girin: ")
+            add_task(task_name)
+        elif choice == '2':
+            complete_task()
+        elif choice == '3':
+            delete_task()
+        elif choice == '4':
+            list_completed_tasks()
+        elif choice == '5':
+            list_all_tasks()
+        elif choice == '6':
+            search_task()
+        elif choice == '7':
+            print("Çıkılıyor...")
+            break
+        else:
+            print("Geçersiz seçim. Lütfen tekrar deneyin.")
 
-        print(
-            """
-
-        1. Add to task
-        2. Comlete to task
-        3. Delelete to task
-        4. List to task
-        5. Quit
-            
-            """)
-        choice = int(input(" Enter your choice : "))
-
-
-        if choice == 1 :
-            addTask()
-
-
-        elif choice == 2 :
-            completeTask()
-
-
-        elif choice == 3:
-            delTask()
-
-
-        elif choice ==4 :
-            print("-"*170)
-            listTask()
-
-
-        elif choice == 5:
-            quitTaskMenu()
-
-
-        else :
-            
-            print(f" Please select the correct entry option:\nLet it be between 1 and 5\n")
-
-
-if __name__ == "__main__" :
-   taskMenu()
-        
-        
+# Programı çalıştır
+if __name__ == "__main__":
+    main_menu()
