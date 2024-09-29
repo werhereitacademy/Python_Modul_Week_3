@@ -1,4 +1,4 @@
-# Görev durumları için sabitler
+# Görev durumları için  sabitler (Constants), Sabitler genelde buyuk harfle tanimlanir ornek : PI = 3,14 gibi. 
 TAMAMLANDI = "Tamamlandı"
 BEKLEMEDE = "Beklemede"
 SILINDI = "Silindi"
