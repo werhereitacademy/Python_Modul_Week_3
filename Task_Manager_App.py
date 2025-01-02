@@ -9,18 +9,23 @@ task_number = 1#Global Task Number for list
 
 # Function to add a new task
 def add_task(task_name):
+    pass
 
 # Function to mark task as completed
 def complete_task(seq_num):
+    pass
 
 # Delete task function
 def delete_task(seq_num):
+    pass
 
 # Function to list completed tasks
 def list_completed_tasks():
+    pass
 
 # Function to list all tasks
 def list_all_tasks():
+    pass
 
 # Main menu
 def main():
