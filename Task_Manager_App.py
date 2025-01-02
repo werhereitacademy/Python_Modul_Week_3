@@ -40,11 +40,25 @@ def delete_task(seq_num):
 
 # Function to list completed tasks
 def list_completed_tasks():
-    pass
+    completed_tasks = [task for task in tasks if task['Status'] == 'Completed']
+
+    if not completed_tasks:
+        print("No completed tasks available.")
+        return
+
+    print("\nCompleted Tasks:")
+    for task in completed_tasks:
+        print(f"Task Number: {task['Task Number']}, Task Name: {task['Task Name']}")
 
 # Function to list all tasks
 def list_all_tasks():
-    pass
+    if not tasks:
+        print("No tasks available.")
+        return
+
+    print("\nAll Tasks:")
+    for task in tasks:
+        print(f"Task Number: {task['Task Number']}, Task Name: {task['Task Name']}, Status: {task['Status']}")
 
 # Main menu
 def main():
