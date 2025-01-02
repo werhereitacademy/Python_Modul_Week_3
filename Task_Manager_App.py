@@ -9,15 +9,34 @@ task_number = 1#Global Task Number for list
 
 # Function to add a new task
 def add_task(task_name):
-    pass
+    global task_number
+    task = {
+        'Task Number': task_number,
+        'Task Name': task_name,
+        'Status': 'Pending'
+    }
+    tasks.append(task)
+    task_number += 1
+    print(f"Task '{task_name}' has been added.")
 
 # Function to mark task as completed
 def complete_task(seq_num):
-    pass
+    for task in tasks:
+        if task['Task Number'] == seq_num:
+            task['Status'] = 'Completed'
+            print(f"Task {seq_num} marked as completed.")
+            break
+    print(f"Task {seq_num} not found.")
 
 # Delete task function
 def delete_task(seq_num):
-    pass
+    global tasks
+    task_to_delete = None
+    for task in tasks:
+        if task['Task Number'] == seq_num:
+            task_to_delete = task
+            break
+    print(f"Task {seq_num} has been deleted.")
 
 # Function to list completed tasks
 def list_completed_tasks():
