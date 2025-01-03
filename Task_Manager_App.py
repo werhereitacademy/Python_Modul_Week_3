@@ -31,10 +31,9 @@ def complete_task(seq_num):
 # Delete task function
 def delete_task(seq_num):
     global tasks
-    task_to_delete = None
     for task in tasks:
         if task['Task Number'] == seq_num:
-            task_to_delete = task
+            task['Status'] = 'Deleted'
             break
     print(f"Task {seq_num} has been deleted.")
 
