@@ -1,0 +1,69 @@
+tasks=[]
+completed_tasks=[]
+def show_menu():
+    print('\n********Task Manager********')
+    print('1. Gorev Ekle')
+    print('2. Gorevleri Listele')
+    print('3. Gorevleri Tamamlandi Olarak Isaretle')
+    print('4. Tamamlanan Gorevleri Listele')
+    print('5. Gorev Sil')
+    print('6. Cikis Yap')
+def add_task():
+    task=input("Eklemek istediginiz gorevi giriniz:")
+    tasks.append(task)
+    print(f"'{task}' gorevi basariyla eklendi!")
+def list_tasks ():
+    if not tasks:
+        print('Henuz Listenizde Gorev Yok.')
+    else:
+        print('\nGorev Listesi:')
+        for i, task in enumerate (tasks, start=1 ): #enumerate ile liste elemanlarina indexleriyle birlikte erisim saglariz.
+            print(f'{i}.{task}')    #enumerate normalde indexleri 0'dan baslatir. Start=1 ile indexi 1'den baslatiriz.
+def mark_task_completed():
+    list_tasks()
+    try:
+        task_number=int(input('\nTamamlanan gorevin numarasini girin:'))
+        if 1<=task_number<=len(tasks):
+            completed_task=tasks.pop(task_number-1)
+            completed_tasks.append(completed_task)
+            print(f"'{completed_task}' tamamlandi olarak isaretlendi.")
+        else:
+            print("Gecersiz gorev numarasi!")
+    except ValueError:
+        print('Lutfen bir sayi girin!')
+def list_completed_tasks():
+    if not completed_tasks:
+        print('Hic tamamlanan gorev yok!')
+    else:
+        print("\nTamamlanan Gorevler:")
+        for i, task in enumerate (completed_tasks, start=1):
+            print(f"{i}.{task}")
+def delete_task():
+    list_tasks()
+    try:  #try-except kullanici yanlis bir girdi girdiginde hata olusumunu ve sistem cokmesini onlemek.
+        task_number=int(input('\nSilmek istediginiz gorev numarasini giriniz:'))
+        if 1<=task_number<=len(tasks):
+            removed_task=tasks.pop(task_number-1)
+            print(f"'{removed_task}' gorevi silindi")
+        else:
+            print('Gecersiz gorev numarasi!')
+    except ValueError:  #try-except kullanici yanlis bir girdi girdiginde hata olusumunu ve sistem cokmesini onlemek.
+        print("Lutfen bir sayi giriniz!")
+while True:
+    show_menu()
+    choice=input("\nSeciminizi Yapin (1-5):")
+    if choice=='1':
+        add_task()
+    elif choice =='2':
+        list_tasks()
+    elif choice == '3':
+        mark_task_completed()
+    elif choice== '4':
+        list_completed_tasks()
+    elif choice== '5':
+        delete_task()
+    elif choice== '6':
+        print('Cikis Yapiliyor. Iyi Gunler!')
+        break
+    else:
+        print('Gecersiz Secim, Tekrar deneyiniz!')
