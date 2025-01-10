@@ -5,12 +5,12 @@ gorevler=[]
 
 while True:
 
-    print("yeni bir gorev eklemek icin: 1")
-    print("bir gorevi tamamlamak icin:2 ")
-    print("bir gorevi silmek icin:3")
-    print("tamamlanan gorevleri listelemek icin 4")
-    print("Tüm görevleri durumlarıyla birlikte listelemek icin 5")
-    print("cikis yapmak icin 6")
+    print("1:yeni gorev")
+    print("2:tamamlama")
+    print("3:silmek")
+    print("4:tamamlanan gorevler")
+    print("5:durumlarıyla birlikte listele")
+    print("6:cikis")
 
     secim = int(input("1 ilr 6 arasi bir rakam giriniz"))
 
@@ -40,7 +40,15 @@ while True:
         gorevNo = int(input("silmek istediginiz gorev numarasini yaziniz:"))
         for gorev in gorevler:
             if gorevNo == gorev["gorev numarasi"]:
-                gorev.clear()
+                gorevler.remove(gorev)
+
+                sayac=1
+                for gorev in gorevler:
+                    gorev["gorev numarasi"]=sayac
+                    sayac+=1
+
+    
+
                 print("gorev silindi")
                 return
 
