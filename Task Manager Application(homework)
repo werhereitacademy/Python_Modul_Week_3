@@ -1,0 +1,80 @@
+tasks = []
+next_sequence_number = 1
+
+def add_task():
+  global next_sequence_number
+  task_name = input("Enter task name: ")
+  
+  # Find the next available sequence number
+  sequence_number = next_sequence_number
+  next_sequence_number +=1
+  
+  task = {
+      "sequence_number": sequence_number,
+      "task_name": task_name,
+      "status": "Pending"
+  }
+  tasks.append(task)
+  print(f"Task '{task_name}' added with sequence number {sequence_number}.")
+
+def complete_task():
+  sequence_number = int(input("Enter sequence number of task to complete: "))
+  for task in tasks:
+    if task["sequence_number"] == sequence_number:
+      task["status"] = "Completed"
+      print(f"Task '{task['task_name']}' marked as completed.")
+      return
+  print(f"Task with sequence number {sequence_number} not found.")
+
+def delete_task():
+  sequence_number = int(input("Enter sequence number of task to delete: "))
+  for task in tasks:
+    if task["sequence_number"] == sequence_number:
+      task["status"] = "Deleted"
+      print(f"Task '{task['task_name']}' deleted.")
+      return
+  print(f"Task with sequence number {sequence_number} not found.")
+
+def list_completed_tasks():
+  completed_tasks = [task for task in tasks if task["status"] == "Completed"]
+  if completed_tasks:
+    print("Completed Tasks:")
+    for task in sorted(completed_tasks, key=lambda x: x["sequence_number"]):
+      print(f"- {task['sequence_number']}: {task['task_name']}")
+  else:
+      print("No completed tasks found.")
+
+def list_all_tasks():
+  if tasks:
+    print("All Tasks:")
+    for task in sorted(tasks, key=lambda x: x["sequence_number"]):
+        print(f"- {task['sequence_number']}: {task['task_name']} ({task['status']})")
+  else:
+    print("No tasks found.")
+
+while True:
+  print("\nTask Manager")
+  print("1. Add Task")
+  print("2. Complete Task")
+  print("3. Delete Task")
+  print("4. List Completed Tasks")
+  print("5. List All Tasks")
+  print("6. Exit")
+  
+  choice = input("Enter your choice: ")
+  
+  if choice == '1':
+    add_task()
+  elif choice == '2':
+    complete_task()
+  elif choice == '3':
+    delete_task()
+  elif choice == '4':
+    list_completed_tasks()
+  elif choice == '5':
+    list_all_tasks()
+  elif choice == '6':
+    print("Exiting...")
+    break
+  else:
+    print("Invalid choice. Please try again.")
