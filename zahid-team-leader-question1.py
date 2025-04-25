@@ -12,9 +12,9 @@ try:
     if(menu_choice == 1):
         print(base_function.add_new_task())
     elif(menu_choice == 2):
-        base_function.complete_task()
+        print(base_function.complete_task())
     elif(menu_choice == 3):
-        base_function.delete_task()
+        print(base_function.delete_task())
     elif(menu_choice == 4):
         print(base_function.view_list_task())
 except Exception as e:

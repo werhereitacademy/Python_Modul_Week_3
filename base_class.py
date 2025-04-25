@@ -42,7 +42,15 @@ class base_class:
             print(e)
     
     def complete_task(self):
-        return "Task has been completed"
+        try:
+            id = int(input("Please Enter the task id which you want to update "))
+            rows = self.__read_json_data()
+            for i in rows:
+                i["status"] = "completed"
+            self.__write_data_in_file(rows)
+            return "Successfully updated"
+        except Exception as e:
+            print(e)
     
     def delete_task(self):
         try:
