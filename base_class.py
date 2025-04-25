@@ -23,8 +23,7 @@ class base_class:
                 "type":"int"
             },
             {
-                "text":"List all tasks with their status Press 5"
-                "",
+                "text":"List all tasks with their status Press 5",
                 "type":"int"
             }]
         return create_menu_list
