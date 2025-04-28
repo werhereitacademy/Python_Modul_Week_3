@@ -1,7 +1,6 @@
 import os
 
 clear_screen = lambda: print("\033[H\033[J")
-
 tasks = []
 
 # Sayısal girişi gecerli olarak alır.
@@ -12,17 +11,21 @@ def get_input(message="Lütfen bir işlem numarası giriniz: "):
         except ValueError:
             print("lütfen gecerli bir deger giriniz")
 
+def show_message(message):
+    print(message)
+    input("\nDevam etmek için bir tuşa basın...")
+    
 # Menu başlıgını yazdırır.
-def menu_header(menu_name):
+def menu_header(menu_name, menu_width=30):
     clear_screen()
-    global menu_width
-    menu_width = 30
+
     print(menu_width*'-')
     print(f"\033[1;33m"+ menu_name.center(menu_width)+f"\033[0m")
     print(menu_width*'-')
 
 # Ana menuyu yazdırır.
 def show_main_menu():
+    menu_width = 30
     menu_header("Task Manager")
 
     print("1 - Add new task")
@@ -54,62 +57,61 @@ def add_task():
         "status":"Pending"
     }
     tasks.append(task)
-    print(tasks)
+    show_message("Görev başarıyla eklendi.")
 
-    print("Görev başarıyla eklendi.")
 
 
 def delete_task():
-    menu_header("Delete Task")
-
+    menu_header("Delete Task",50)
     seq_number = get_input("Silmek istediğiniz görev numarasını girin: ")
     for task in tasks:
         if task["seq_number"] == seq_number:
             if task["status"] == "Deleted":
-                print("Bu görev zaten silinmiş.")
+                show_message("Bu görev zaten silinmiş.")
                 return
             task["status"] = "Deleted"
             task["seq_number"] = None
-            print("Görev başarıyla silindi (işaretlendi).")
+            show_message("Görev başarıyla silindi.")
             return
-    print("Görev bulunamadı.")
+    show_message("Görev bulunamadı.")
 
 def complete_task():
-    menu_header("Set Completed Tasks")
-
+    menu_header("Complete Task",50)
     seq_number = get_input("Tamamlamak istediğiniz görev numarasını girin: ")
     for task in tasks:
         if task["seq_number"] == seq_number:
             if task["status"] == "Completed":
-                print("Bu görev zaten tamamlanmış.")
+                show_message("Bu görev zaten tamamlanmış.")
                 return
+            
             task["status"] = "Completed"
-            print("Görev başarıyla tamamlandı.")
+            show_message("Görev başarıyla tamamlandı.")
             return
-    print("Görev bulunamadı.")
+        
+    show_message("Görev bulunamadı.")
 
 def list_completed_tasks():
-    menu_header("Completed Tasks")
+    menu_header("Completed Tasks", 50)
 
     completed_tasks = [task for task in tasks if task["status"] == "Completed"]
     if not completed_tasks:
-        print("Tamamlanmış görev bulunamadı.")
+        show_message("Tamamlanmış görev bulunamadı.")
     else:
         for task in completed_tasks:
             print(f"{task['seq_number']}. {task['task_name']}")
-    input("\nDevam etmek için bir tuşa basın...")
+            input("\nDevam etmek için bir tuşa basın...")
 
 def list_tasks():
-    menu_header("All Tasks\nS.No\tTask\tStatus")
+    menu_header("All Tasks\nS.No\tTask\tStatus", 30)
 
     if not tasks:
-        print("Görev bulunamadı.")
+        show_message("Görev bulunamadı.")
 
     else:
         sorted_tasks = sorted(tasks, key=lambda x: x['seq_number']) 
         for task in sorted_tasks:
             print(f"{task['seq_number']}\t{task['task_name']}\t{task['status']}")
-    input("\nDevam etmek için bir tuşa basın...")
+        input("\nDevam etmek için bir tuşa basın...")
 
 while True:
     selection = show_main_menu()
