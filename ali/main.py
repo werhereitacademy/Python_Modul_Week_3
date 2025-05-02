@@ -61,12 +61,12 @@ def ana_menu():
         print("4. Tamamlanan Görevleri Listele")
         print("5. Tüm Görevleri Listele")
         print("6. Çıkış")
-        print()
+        
         # Kullanıcıdan seçim alma
         
         print("--"*30)
         secim = input("Seçiminizi yapın (1-6): ")
-        print()
+        
         # Seçim kontrolü
         
         if secim == "1":
