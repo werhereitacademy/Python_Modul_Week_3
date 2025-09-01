@@ -1,0 +1,174 @@
+import sys
+mainTaskList = []
+sequenceNumber = 1
+
+
+def menu():
+    print("\n1-) Add a new task  2-) Complete a task   3-) Delete a task  4-) List completed tasks 5-) listAllTask  6-) Exit ")
+    while True:
+        try:
+            choise = int(input("Please enter what do you want to do: \n"))
+            if 0 < choise < 7:
+                break
+            else:
+                print("please enter a valid number!")
+        except ValueError:
+            print("please enter a valid number!")
+
+    functionDict = {
+        1:addTask,
+        2:completeTask,
+        3:deleteTask,
+        4:listCompletedTasks,
+        5:listAllTasks,
+        6:exit
+    }
+    functionDict[choise]()
+
+
+def addTask():
+    global sequenceNumber
+    global mainTaskList
+    taskDict = {}
+    flag = False
+    taskInput = input("Please enter the task: ").title()
+    if mainTaskList:
+        for i in mainTaskList:
+            for j in i.values():
+                if "deleted" in j.values():   # in place of the deleted task
+                    j["Task Name"] = taskInput
+                    j["Task Status"] = "Pending.." 
+                    flag = True
+                    break  
+            if flag:
+                break            
+        
+    if not flag:
+        taskDict[sequenceNumber] = {"Task Name": taskInput,"Task Status": "Pending.."}
+        mainTaskList.append(taskDict)
+        sequenceNumber += 1
+        print("A new taak has been added ")
+
+    menu()
+
+
+def deleteTask():
+    global mainTaskList
+    flag = False
+    if not mainTaskList:
+        print("Task list is empty...")
+    if mainTaskList:
+        for i in mainTaskList: # to list
+            for j, k in i.items():
+                print(f"...............{j}. Task............")
+                for l,m in k.items():
+                    print(f"{l}:{m}")
+        while True:
+            while True:
+                try:
+                    deleteChoise = int(input("\nPlease enter the number of the task you want to delete: "))
+                    break
+                except ValueError:
+                    print("please enter a valid number!")
+
+            for i in mainTaskList:
+                if deleteChoise in i.keys():
+                    i[deleteChoise]["Task Status"] = "deleted" # Task Status has been marked as deleted
+                    print("the task has been deleted")
+                    flag = True
+                    break
+                elif flag == False and deleteChoise not in i.keys():
+                    print("please enter a valid number!")
+                    break
+
+            if flag == True:
+                break
+                
+
+    menu()
+
+
+def completeTask():
+    global mainTaskList
+    flag = False
+    if not mainTaskList:
+        print("There are no tasks to complete")
+    if mainTaskList:
+        print("")
+        for i in mainTaskList: # to list
+            for j, k in i.items():
+                print(f"............{j}. Task............")
+                for l,m in k.items():
+                    print(f"{l}: {m}")
+            
+        while True:
+            while True:
+                try:
+                    completeChoise = int(input("\nPlease enter the number of the task you want to complete: "))
+                    break
+                except ValueError:
+                    print("please enter a valid number!")
+
+            for i in mainTaskList:
+                if completeChoise in i.keys():
+                    i[completeChoise]["Task Status"] = "completed" # ..marked as completed
+                    print("the task has been completed")
+                    flag = True
+                elif flag == False and completeChoise not in i.keys():
+                    print("please enter a valid number")
+                    break
+
+            if flag == True:
+                break
+                    
+
+    menu()
+
+
+
+def listCompletedTasks():
+    global mainTaskList
+    sequenceNumber2 = 1
+    flag = False
+    if not mainTaskList:
+        print("There is no task to view")
+    elif mainTaskList:
+        for dictionary in mainTaskList:
+            for key,value in dictionary.items():
+                if "completed" in value.values():
+                    print(f".........{sequenceNumber2}. completed Task.......")
+                    sequenceNumber2 += 1
+                    flag = True
+                    for keys, values in value.items():
+                        print(f"{keys}: {values}")
+
+                elif flag == False and "completed" not in value.values():
+                    print("there is no completed task")
+                    break
+    menu()
+
+def listAllTasks():
+    global mainTaskList
+    if not mainTaskList:
+        print("there is no task to list")
+    elif mainTaskList:
+        for dictionary in mainTaskList:
+            for key1, value1 in dictionary.items():
+                print(f"\n********  {key1}. TASK  *********\n")
+                for key2, value2 in value1.items():
+                    print(f"{key2}: {value2}")
+    print(" ")
+    menu()
+
+
+
+def exit():
+    print("please wait...")
+    print("exiting the program..")
+    sys.exit()
+
+        
+menu()
+
+
+
