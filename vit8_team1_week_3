@@ -1,0 +1,153 @@
+# Python Module Week 3 - Solutions
+
+# ----------------------------
+# Question 1: Rectangle Class
+# ----------------------------
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def area(self):
+        return self.width * self.height
+
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+# Q1 Test
+print("Q1: Rectangle Example")
+rect = Rectangle(5, 7)
+print("Area:", rect.area())
+print("Perimeter:", rect.perimeter())
+
+# ----------------------------
+# Question 2: School Class
+# ----------------------------
+class School:
+    def __init__(self, name, foundation_year):
+        self.name = name
+        self.foundation_year = foundation_year
+        self.students = []   # list of dicts: {"name": ..., "class": ...}
+        self.teachers = {}   # dict: {teacher_name: branch}
+
+#add_new_student(self, student_name, class): A method used to add a new student to the school.
+# It takes the student's name and class and adds it to the "students" list.
+    def add_new_student(self, student_name, class_name):
+        self.students.append({"name": student_name, "class": class_name})
+
+    def add_new_teacher(self, teacher_name, branch):
+        self.teachers[teacher_name] = branch
+
+    def view_student_list(self):
+        print("\n--- Students List ---")
+        for student in self.students:
+            print(f"Name: {student['name']}, Class: {student['class']}")
+
+    def view_teacher_list(self):
+        print("\n--- Teachers List ---")
+        for teacher, branch in self.teachers.items():
+            print(f"Name: {teacher}, Branch: {branch}")
+# Q2 Test
+print("\nQ2: School Example")
+school = School("Python High School", 2000)
+school.add_new_student("Ali", "10A")
+school.add_new_student("Ayşe", "11B")
+school.add_new_teacher("Mr. Smith", "Math")
+school.add_new_teacher("Ms. Brown", "Physics")
+school.view_student_list()
+school.view_teacher_list()
+
+# ----------------------------
+# Question 3: Shape, Rectangle, Square
+# ----------------------------
+class Shape:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+
+class RectangleShape(Shape):
+    def calculate_area(self):
+        return self.width * self.height
+
+
+class Square(Shape):
+    def calculate_area(self):
+        return self.width * self.height   # width == height for square
+# Q3 Test
+print("\nQ3: Shape Example")
+rect_shape = RectangleShape(5, 7)
+square = Square(4, 4)
+print("Rectangle Area:", rect_shape.calculate_area())
+print("Square Area:", square.calculate_area())
+
+# ----------------------------
+# Question 4: Vehicle, SUV, SportsCar
+# ----------------------------
+class Vehicle:
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+
+
+class SUV(Vehicle):   # Off-Road Vehicle
+    def __init__(self, make, model, year, four_wheel_drive):
+        super().__init__(make, model, year)
+        self.four_wheel_drive = four_wheel_drive
+
+
+class SportsCar(Vehicle):
+    def __init__(self, make, model, year, max_speed):
+        super().__init__(make, model, year)
+        self.max_speed = max_speed
+# Q4 Test
+print("\nQ4: Vehicle Example")
+suv = SUV("Toyota", "Land Cruiser", 2022, True)
+sports_car = SportsCar("Ferrari", "488 GTB", 2021, 330)
+print(f"SUV: {suv.make} {suv.model}, Year: {suv.year}, 4x4: {suv.four_wheel_drive}")
+print(f"SportsCar: {sports_car.make} {sports_car.model}, Year: {sports_car.year}, Max Speed: {sports_car.max_speed} km/h")
+
+# ----------------------------
+# Question 5: Customer & Account
+# ----------------------------
+class Customer:
+    def __init__(self, name, surname, tc_identification, phone):
+        self.name = name
+        self.surname = surname
+        self.tc_identification = tc_identification
+        self.phone = phone
+
+    def display_information(self):
+        print(f"Customer: {self.name} {self.surname}, "
+              f"TC: {self.tc_identification}, Phone: {self.phone}")
+
+
+class Account(Customer):
+    def __init__(self, customer, account_number, balance=0):
+        super().__init__(customer.name, customer.surname,
+                         customer.tc_identification, customer.phone)
+        self.account_number = account_number
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+        print(f"Deposited {amount} TL. New Balance: {self.balance} TL")
+
+    def money_check(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+            print(f"Withdrew {amount} TL. New Balance: {self.balance} TL")
+        else:
+            print("Insufficient balance! Transaction cancelled.")
+
+    def display_balance(self):
+        print(f"Account Balance: {self.balance} TL")
+# Q5 Test
+print("\nQ5: Customer & Account Example")
+customer1 = Customer("Ahmet", "Yılmaz", "12345678901", "05551234567")
+account1 = Account(customer1, "ACC1001", 1000)
+customer1.display_information()
+account1.display_balance()
+account1.deposit(500)
+account1.money_check(1200)
+account1.money_check(500)
